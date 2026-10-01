@@ -1,0 +1,10 @@
+{
+  "name": "smart-calculator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart Calculator — Fast, Simple & Accurate",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Smart Calculator — Fast, Simple &amp; Accurate</title>
+    <meta name="description" content="Smart Calculator: a fast, simple and accurate online calculator with keyboard support, calculation history and light/dark mode." />
+    <meta name="theme-color" content="#eef1f7" />
+    <meta property="og:title" content="Smart Calculator" />
+    <meta property="og:description" content="Fast, Simple & Accurate" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      // Apply the saved (or system) theme before first paint.
+      (function () {
+        var theme;
+        try { theme = localStorage.getItem('smart-calc-theme'); } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="module" src="/js/app.js"></script>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28">
+            <rect x="3" y="3" width="26" height="26" rx="8" fill="currentColor" opacity=".16" />
+            <path d="M10 12h5M12.5 9.5v5M18 12h5M10.5 19.5l4 4M14.5 19.5l-4 4M18 20h5M18 23h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+          </svg>
+        </span>
+        <div class="brand-text">
+          <h1>Smart Calculator</h1>
+          <p class="tagline">Fast, Simple &amp; Accurate</p>
+        </div>
+      </div>
+
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </header>
+
+    <main class="layout">
+      <section class="calculator" id="calculator" aria-label="Calculator">
+        <div class="display">
+          <div class="display-expression" id="expression" aria-label="Expression">&nbsp;</div>
+          <div class="display-value" id="display" data-size="lg" aria-label="Current value">0</div>
+          <div class="display-preview" id="preview" aria-hidden="true">&nbsp;</div>
+        </div>
+
+        <div class="keypad" id="keypad">
+          <button type="button" class="key key--fn" data-action="clear" aria-label="All clear" aria-keyshortcuts="Escape">AC</button>
+          <button type="button" class="key key--fn" data-action="delete" aria-label="Delete last digit" aria-keyshortcuts="Backspace">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h10.5A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5H9l-6-7 6-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m11.5 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span class="key-label">DEL</span>
+          </button>
+          <button type="button" class="key key--fn" data-action="percent" aria-label="Percent" aria-keyshortcuts="%">%</button>
+          <button type="button" class="key key--op" data-action="operator" data-value="/" aria-label="Divide" aria-keyshortcuts="/">÷</button>
+
+          <button type="button" class="key" data-action="digit" data-value="7">7</button>
+          <button type="button" class="key" data-action="digit" data-value="8">8</button>
+          <button type="button" class="key" data-action="digit" data-value="9">9</button>
+          <button type="button" class="key key--op" data-action="operator" data-value="*" aria-label="Multiply" aria-keyshortcuts="*">×</button>
+
+          <button type="button" class="key" data-action="digit" data-value="4">4</button>
+          <button type="button" class="key" data-action="digit" data-value="5">5</button>
+          <button type="button" class="key" data-action="digit" data-value="6">6</button>
+          <button type="button" class="key key--op" data-action="operator" data-value="-" aria-label="Subtract" aria-keyshortcuts="-">−</button>
+
+          <button type="button" class="key" data-action="digit" data-value="1">1</button>
+          <button type="button" class="key" data-action="digit" data-value="2">2</button>
+          <button type="button" class="key" data-action="digit" data-value="3">3</button>
+          <button type="button" class="key key--op" data-action="operator" data-value="+" aria-label="Add" aria-keyshortcuts="+">+</button>
+
+          <button type="button" class="key key--sign" data-action="sign" aria-label="Toggle positive or negative" aria-keyshortcuts="F9">+/−</button>
+          <button type="button" class="key" data-action="digit" data-value="0">0</button>
+          <button type="button" class="key" data-action="decimal" aria-label="Decimal point" aria-keyshortcuts=".">.</button>
+          <button type="button" class="key key--equals" data-action="equals" aria-label="Equals" aria-keyshortcuts="Enter">=</button>
+        </div>
+      </section>
+
+      <aside class="history" aria-labelledby="history-title">
+        <div class="history-header">
+          <h2 id="history-title">History</h2>
+          <span class="history-count" id="history-count"></span>
+        </div>
+        <p class="history-hint">Select a calculation to reuse its result.</p>
+        <ol class="history-list" id="history-list" hidden></ol>
+        <div class="history-empty" id="history-empty">
+          <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <p>No calculations yet.<br />Your results appear here.</p>
+        </div>
+        <button type="button" class="history-clear" id="history-clear" disabled>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Clear History
+        </button>
+      </aside>
+    </main>
+
+    <section class="shortcuts" aria-labelledby="shortcuts-title">
+      <h2 id="shortcuts-title">Keyboard shortcuts</h2>
+      <ul>
+        <li><kbd>0</kbd>–<kbd>9</kbd> <span>Numbers</span></li>
+        <li><kbd>.</kbd> <span>Decimal</span></li>
+        <li><kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <span>Operators</span></li>
+        <li><kbd>Enter</kbd> or <kbd>=</kbd> <span>Calculate</span></li>
+        <li><kbd>Backspace</kbd> <span>Delete</span></li>
+        <li><kbd>Esc</kbd> <span>Clear all</span></li>
+        <li><kbd>%</kbd> <span>Percent</span></li>
+        <li><kbd>F9</kbd> or <kbd>N</kbd> <span>+/−</span></li>
+        <li><kbd>Tab</kbd> <span>Move between controls</span></li>
+      </ul>
+    </section>
+
+    <footer class="site-footer">
+      <p>Smart Calculator · Fast, Simple &amp; Accurate</p>
+    </footer>
+
+    <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+  </body>
+</html>
